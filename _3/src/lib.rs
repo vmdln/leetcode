@@ -2,16 +2,23 @@
 #![allow(clippy::must_use_candidate)]
 
 pub fn _3(s: &str) -> Option<usize> {
-    (0..s.len())
-        .map(|i| get_longest_unique(&s.as_bytes()[i..]))
-        .max()
-        .flatten()
-}
+    if s.is_empty() {
+        return None;
+    }
 
-fn get_longest_unique(buf: &[u8]) -> Option<usize> {
-    buf.iter()
-        .enumerate()
-        .position(|(i, v)| buf[..i].contains(v))
+    let mut start = 0;
+    let mut ret = 0;
+
+    let bytes = s.as_bytes();
+    bytes.iter().enumerate().for_each(|(i, c)| {
+        if let Some(duplicate) = bytes[start..i].iter().position(|v| v == c) {
+            ret = ret.max(i - start);
+            start += duplicate + 1;
+        }
+    });
+    ret = ret.max(bytes.len() - start);
+
+    Some(ret)
 }
 
 #[cfg(test)]
