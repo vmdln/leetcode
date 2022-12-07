@@ -1,3 +1,6 @@
+#![warn(clippy::pedantic)]
+#![allow(clippy::must_use_candidate)]
+
 pub fn two_sum(nums: &[i32], target: i32) -> Option<(usize, usize)> {
     nums.iter().enumerate().find_map(|(i, x)| {
         nums[i + 1..]
