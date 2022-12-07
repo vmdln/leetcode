@@ -1,7 +1,7 @@
 #![warn(clippy::pedantic)]
 #![allow(clippy::must_use_candidate)]
 
-pub fn two_sum(nums: &[i32], target: i32) -> Option<(usize, usize)> {
+pub fn _1(nums: &[i32], target: i32) -> Option<(usize, usize)> {
     nums.iter().enumerate().find_map(|(i, x)| {
         nums[i + 1..]
             .iter()
@@ -12,8 +12,6 @@ pub fn two_sum(nums: &[i32], target: i32) -> Option<(usize, usize)> {
 
 #[cfg(test)]
 mod tests {
-    use crate::*;
-
     #[test]
     fn _1() {
         let nums = [2, 7, 11, 15];
@@ -21,7 +19,7 @@ mod tests {
 
         let ret = Some((0, 1));
 
-        assert_eq!(two_sum(&nums, target), ret);
+        assert_eq!(crate::_1(&nums, target), ret);
     }
 
     #[test]
@@ -31,7 +29,7 @@ mod tests {
 
         let ret = Some((1, 2));
 
-        assert_eq!(two_sum(&nums, target), ret);
+        assert_eq!(crate::_1(&nums, target), ret);
     }
 
     #[test]
@@ -41,6 +39,6 @@ mod tests {
 
         let ret = Some((0, 1));
 
-        assert_eq!(two_sum(&nums, target), ret);
+        assert_eq!(crate::_1(&nums, target), ret);
     }
 }
