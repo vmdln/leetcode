@@ -1,24 +1,32 @@
 #![warn(clippy::pedantic)]
 #![allow(clippy::must_use_candidate)]
+#![allow(clippy::bool_comparison)]
 
 pub fn _3(s: &str) -> Option<usize> {
-    if s.is_empty() {
-        return None;
-    }
-
     let mut start = 0;
-    let mut ret = 0;
 
     let bytes = s.as_bytes();
-    bytes.iter().enumerate().for_each(|(i, c)| {
-        if let Some(duplicate) = bytes[start..i].iter().position(|v| v == c) {
-            ret = ret.max(i - start);
-            start += duplicate + 1;
-        }
-    });
-    ret = ret.max(bytes.len() - start);
+    let ret = bytes
+        .iter()
+        .enumerate()
+        .filter_map(|(i, c)| {
+            bytes[start..i]
+                .iter()
+                .position(|v| v == c)
+                .map(|duplicate| {
+                    let tmp = i - start;
+                    start += duplicate + 1;
 
-    Some(ret)
+                    tmp
+                })
+        })
+        .max();
+
+    match ret {
+        Some(v) => Some(v.max(bytes.len() - start)),
+        None if bytes.is_empty() == false => Some(bytes.len()),
+        None => None,
+    }
 }
 
 #[cfg(test)]
