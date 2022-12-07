@@ -1,0 +1,11 @@
+[package]
+name = "_2"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+doctest = false
+
+[dependencies]
+itertools = "0.10.5"
