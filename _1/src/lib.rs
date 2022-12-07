@@ -1,10 +1,10 @@
 pub fn two_sum(nums: &[i32], target: i32) -> Option<(usize, usize)> {
-    for (i, x) in nums.iter().enumerate() {
-        if let Some(j) = nums[i + 1..].iter().position(|y| x + y == target) {
-            return Some((i, i + 1 + j));
-        }
-    }
-    None
+    nums.iter().enumerate().find_map(|(i, x)| {
+        nums[i + 1..]
+            .iter()
+            .position(|y| x + y == target)
+            .map(|j| (i, i + 1 + j))
+    })
 }
 
 #[cfg(test)]
